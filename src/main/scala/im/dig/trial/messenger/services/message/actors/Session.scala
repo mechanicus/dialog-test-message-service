@@ -14,14 +14,20 @@ import im.dig.trial.messenger.services.json.JsonCodecs._
 
 import scala.concurrent.Future
 
-
+// объект уведомления о событии, посылаемом клиенту в сокет
 final case class Response(eventName: String, data: Json)
 object Response {
   implicit val responseCodec: CodecJson[Response] =
     casecodec2(Response.apply, Response.unapply)("eventName", "data")
 }
 
-
+/**
+  * Актор, обслуживающий сессию отдельного подключения пользовательского
+  * клиента к сервису
+  * Кодирует все приходящие события в json и отправляет клиенту через websocket
+  * @param userId - id пользователя
+  * @param sessionId - id сессии
+  */
 final class Session(userId: UserId, sessionId: SessionId) extends Actor {
 
   private implicit val system: ActorSystem = context.system
@@ -55,6 +61,8 @@ final class Session(userId: UserId, sessionId: SessionId) extends Actor {
       socket ! Response("ChatFile", cf.asJson)
   }
 
+  // игнорируем все сообщения от клиента
+  // этот websocket только для отправки уведомлений клиенту
   private def decoderFlow(implicit mat: Materializer): Flow[ws.Message, String, NotUsed] = {
     val ignoreErrors: Supervision.Decider = _ => Supervision.Resume
     Flow[ws.Message].mapAsync(1) {
@@ -67,6 +75,7 @@ final class Session(userId: UserId, sessionId: SessionId) extends Actor {
     }.withAttributes(ActorAttributes.supervisionStrategy(ignoreErrors))
   }
 
+  // кодируем уведомления в json и отправляем клиету как текст
   private def encoderFlow: Flow[Response, ws.Message, NotUsed] = {
     Flow[Response].map(_.asJson.nospaces).map(TextMessage(_))
   }

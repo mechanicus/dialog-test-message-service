@@ -7,7 +7,12 @@ import im.dig.trial.messenger.services.model._
 
 import scala.concurrent.duration._
 
-
+/**
+  * Актор, обслуживающий подключения пользователей к сервису
+  * Хранит ассоциативный массив userId -> `актор, обслуживающий подключения
+  * конкретного пользователя`
+  * Распределяет приходящие события по конкретным пользователям
+  */
 final class Users extends Actor {
 
   private type UserActor = ActorRef

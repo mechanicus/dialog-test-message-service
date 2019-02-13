@@ -5,6 +5,10 @@ import java.time.LocalDateTime
 import im.dig.trial.messenger.services.model._
 
 
+// здесь хранятся классы сообщений для выполнения
+// запросов к другим микросервисам
+
+
 sealed abstract class AuthServiceMessage
 @SerialVersionUID(1L)
 final case class GetUserId(sessionId: SessionId) extends AuthServiceMessage

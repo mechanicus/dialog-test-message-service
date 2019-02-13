@@ -12,6 +12,9 @@ import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future}
 
 
+/**
+  * Актор akka кластера, явлющийся шлюзом доступа к auth-сервису
+  */
 final class AuthServiceClient extends Actor {
 
   private val cluster = Cluster(context.system)

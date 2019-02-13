@@ -38,7 +38,9 @@ final case class ChatHistory(
   chatFiles: Seq[ChatFile]
 )
 
-
+/**
+  * scala api message сервиса
+  */
 final class MessageServiceApi(
   private val crudServiceClient: ActorRef,
   private val messageServiceActor: ActorRef

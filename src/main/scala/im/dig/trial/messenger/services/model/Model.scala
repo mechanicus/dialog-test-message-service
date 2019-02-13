@@ -10,6 +10,10 @@ import cats.implicits._
 import org.apache.commons.codec.binary.Hex
 
 
+// здесь собраны классы общей для всех микросервисов модели
+// подробное описание в CRUD-сервисе
+
+
 @SerialVersionUID(1L)
 final case class SHA256(bytes: Array[Byte])
 

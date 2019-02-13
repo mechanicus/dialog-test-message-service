@@ -6,6 +6,13 @@ import im.dig.trial.messenger.services.model._
 
 import scala.concurrent.duration._
 
+/**
+  * Актор, обрабатывающий подключения конкретного пользователя к сервису
+  * Хранит ассоциативный массив sessionId -> `актор, обслуживающий отдельное
+  * подключение клиента к сервису (сессия)`
+  * Распределяет пользовательские события по сессиям клиентов
+  * @param userId - id пользователя
+  */
 final class User(userId: UserId) extends Actor {
 
   import context.dispatcher

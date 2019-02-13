@@ -13,6 +13,9 @@ import scala.concurrent.Future
 import scala.concurrent.duration._
 
 
+/**
+  * Актор akka кластера, явлющийся шлюзом доступа к crud-сервису
+  */
 final class CrudServiceClient extends Actor {
 
   private val cluster = Cluster(context.system)

@@ -9,6 +9,7 @@ import im.dig.trial.messenger.services.model.{SessionId, UserId}
 import scala.concurrent.Future
 import scala.concurrent.duration._
 
+// scala api сервиса авторизации
 final class AuthService(private val authServiceClient: ActorRef) {
 
   private implicit val timeout: Timeout = Timeout(1.second)

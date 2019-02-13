@@ -6,6 +6,11 @@ import im.dig.trial.messenger.services.model._
 
 import scala.concurrent.duration._
 
+
+/**
+  * Главный класс интерактивной части message сервиса
+  * Отвечает за интеграцию акторов пользователей, чатов и scala-api вызовов
+  */
 final class MessageServiceActor(crudServiceClient: ActorRef) extends Actor with ActorLogging {
 
   private val users = context.actorOf(Props[Users], "users")
